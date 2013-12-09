@@ -1,33 +1,28 @@
-// node-connect-book/index.js
-// Book logging middleware for connect
+// node-connect-loggly/index.js
+// loggly logging middleware for connect
 
 // This works a lot like the connect logger middleware.
 // Tokens are things in the request and response we want to log.
 // options are a list of tokens to log
 var connectLogger = require('connect').logger;
 
-var exports = module.exports = function bookMiddleware(log, options) {
-  options = options || {};
-  var defaultMethod = options.method && log[options.method] || log.debug;
-  var extractor = buildExtractor(options.tokens || defaultTokens);
+var exports = module.exports = function bookMiddleware(logglyLogger, tokens) {
+  var extractor = buildExtractor(tokens || defaultTokens);
 
   return function (req, res, next) {
     res.on('close', function logRequest() {
-      var packet = extractor(req, res)
-      if (res.headerSent && (res.statusCode < 200 || res.statusCode > 299)) {
-        log.error(packet);
-      } else {
-        defaultMethod(packet);
-      }
+      var packet = extractor(req, res);
+      logglyLogger.log(packet);
     });
 
     next();
-  }
-}
+  };
+};
 
 function buildExtractor(tokenMap) {
   var tuples = Object.keys(tokenMap).map(function(key) {
-    return [key, tokenMap[key], tokens[key]];
+    // If there is no token for a key, we assume its static information and return the value
+    return [key, tokenMap[key], tokens[key] || function () { return tokenMap[key]; }];
   });
 
   return function (req, res) {
