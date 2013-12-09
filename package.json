@@ -1,0 +1,31 @@
+{
+  "name": "connect-book",
+  "version": "0.0.1",
+  "description": "book logging middleware for connect",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodeunit tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Rafflecopter/node-connect-book"
+  },
+  "keywords": [
+    "book",
+    "connect",
+    "express",
+    "middleware",
+    "logging",
+    "log",
+    "loggly"
+  ],
+  "author": "Jon Eisen <jon@metricfeat.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Rafflecopter/node-connect-book/issues"
+  },
+  "homepage": "https://github.com/Rafflecopter/node-connect-book",
+  "dependencies": {
+    "connect": "~2.11.2"
+  }
+}
