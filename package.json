@@ -1,10 +1,9 @@
 {
   "name": "connect-loggly",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "loggly logging middleware for connect",
   "main": "index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git://github.com/Rafflecopter/node-connect-loggly"
