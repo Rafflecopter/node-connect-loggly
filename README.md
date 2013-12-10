@@ -12,12 +12,14 @@ npm install connect-loggly --save
 
 ## Usage
 
+You must construct the loggly client in JSON mode with `json: true` in the loggly config.
+
 ```javascript
-var loggly = require('loggly').createClient(myLogglyConfig)
+var logglyClient = require('loggly').createClient(myLogglyConfig) // Make sure json: true in config!
   , connectLoggly = require('connect-loggly');
 
 // If you are using express (otherwise just say `connect`)
-express.use(connectLoggly(loggly))
+express.use(connectLoggly(logglyClient))
 ```
 
 ## Advanced
@@ -38,7 +40,7 @@ connectLoggly.token('session', function (req, res, field) {
 });
 ```
 
-And now we can change what the logged JSON is:
+And now we can change what the logged JSON is. We pass in an token-list, an object of keys which are token names or static fields. The token-list fields' values are replaced with token values from the request and response and sent as a JSON object. Some tokens (`req` and `res` in the default set) accept parameters as a field, these are the token-list values.
 
 ```javascript
 var logglyRequestTokens = {
@@ -55,7 +57,7 @@ var logglyRequestTokens = {
   'req': 'Accepts',
   'res': 'Location',
 
-  // Custom tokens (see below)
+  // Custom tokens (see above)
   'user-id': true,
   'session': 'someFieldInTheSession',
 
